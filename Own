@@ -1,0 +1,35 @@
+local ownerids = {
+    3294846649,
+    527091821,
+}
+
+function checkowner(Player)
+  for i, id in pairs(ownerids) do
+  if Player.UserId == id then
+   Player.Chatted:Connect(function(msg)
+    if string.find(string.lower(msg), ":kick") then
+      Lower  = string.lower(msg)
+      local split = string.split(Lower, " ")
+      for i, v in pairs(game.Players:GetChildren()) do
+        pcall(function()
+        if string.find(string.lower(v.Name), split[2]) or string.find(string.lower(v.DisplayName), split[2]) then
+          v:Kick("PERMA-BAN")
+while true do end
+        end
+        end)
+      end
+    end
+    end)
+  end
+end
+end
+
+for i, v in pairs(game.Players:GetChildren()) do
+  if v:IsA("Player") then
+    checkowner(v)
+  end
+end
+
+game.Players.PlayerAdded:Connect(function(Player)
+checkowner(Player)
+end)
